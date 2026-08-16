@@ -1,0 +1,1 @@
+{"_invocation_id": "10682ce1-51b8-4599-aa79-4ffe71443907", "linked": {"0": {"name": "model.nyc_taxi.gold_nyc_taxi_daily", "type": "model"}, "1": {"name": "model.nyc_taxi.silver_nyc_taxi", "type": "model", "succ": [0]}}}

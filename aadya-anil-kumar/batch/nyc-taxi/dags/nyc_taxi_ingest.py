@@ -4,6 +4,7 @@ from datetime import datetime
 from airflow import DAG
 from airflow.operators.python import PythonOperator
 #from clickhouse_driver import Client
+from airflow.operators.bash import BashOperator
 
 # ── CONFIG ────────────────────────────────────────────────────────────
 DAG_ID = "nyc_taxi_ingest"
@@ -136,5 +137,8 @@ with DAG(
     t1 = PythonOperator(task_id="file_check", python_callable=file_check)
     t2 = PythonOperator(task_id="validate_schema", python_callable=validate_schema)
     t3 = PythonOperator(task_id="load_bronze", python_callable=load_bronze)
-
-    t1 >> t2 >> t3
+    t4 = BashOperator(
+    task_id="dbt_run",
+    bash_command="cd /opt/airflow/dbt && dbt run --profiles-dir .",
+    )
+    t1 >> t2 >> t3 >> t4

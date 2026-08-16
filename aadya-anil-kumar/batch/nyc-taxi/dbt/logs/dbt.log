@@ -1,0 +1,914 @@
+[0m16:38:58.687655 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x707b31bb6570>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x707b31c5d4f0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x707b303de5a0>]}
+
+
+============================== 16:38:58.856244 | 2d32c046-3c0d-48f8-b281-cabada2750a7 ==============================
+[0m16:38:58.856244 [info ] [MainThread]: Running with dbt=1.11.12
+[0m16:38:58.903377 [debug] [MainThread]: running dbt with arguments {'fail_fast': 'False', 'empty': 'False', 'quiet': 'False', 'invocation_command': 'dbt run --profiles-dir .', 'send_anonymous_usage_stats': 'True', 'warn_error': 'None', 'debug': 'False', 'target_path': 'None', 'no_print': 'None', 'write_json': 'True', 'profiles_dir': '.', 'introspect': 'True', 'indirect_selection': 'eager', 'log_format': 'default', 'log_path': '/opt/airflow/dbt/logs', 'log_cache_events': 'False', 'partial_parse': 'True', 'static_parser': 'True', 'version_check': 'True', 'use_colors': 'True', 'cache_selected_only': 'False', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'use_experimental_parser': 'False', 'printer_width': '80'}
+[0m16:39:08.505647 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '2d32c046-3c0d-48f8-b281-cabada2750a7', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x707b2efa73b0>]}
+[0m16:39:09.156754 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': '2d32c046-3c0d-48f8-b281-cabada2750a7', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x707b2fc000e0>]}
+[0m16:39:09.164986 [info ] [MainThread]: Registered adapter: clickhouse=1.10.1
+[0m16:39:09.672653 [debug] [MainThread]: checksum: f368f5348cf42803b94ef7fb8257ecf3bf9a9a16dd9c8c51fe5172f2dbeb457f, vars: {}, profile: , target: , version: 1.11.12
+[0m16:39:09.689880 [info ] [MainThread]: Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m16:39:09.695735 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'partial_parser', 'label': '2d32c046-3c0d-48f8-b281-cabada2750a7', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x707b2ee2ffe0>]}
+[0m16:39:20.571183 [warn ] [MainThread]: [[33mWARNING[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.
+There are 1 unused configuration paths:
+- models.nyc_taxi.bronze
+[0m16:39:20.656413 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': '2d32c046-3c0d-48f8-b281-cabada2750a7', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x707b2d84b890>]}
+[0m16:39:22.845446 [debug] [MainThread]: Wrote artifact WritableManifest to /opt/airflow/dbt/target/manifest.json
+[0m16:39:22.926931 [debug] [MainThread]: Wrote artifact SemanticManifest to /opt/airflow/dbt/target/semantic_manifest.json
+[0m16:39:23.206390 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': '2d32c046-3c0d-48f8-b281-cabada2750a7', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x707b2ee08da0>]}
+[0m16:39:23.246757 [info ] [MainThread]: Found 2 models, 530 macros
+[0m16:39:23.268255 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '2d32c046-3c0d-48f8-b281-cabada2750a7', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x707b2ec05d30>]}
+[0m16:39:23.325336 [info ] [MainThread]: 
+[0m16:39:23.402949 [info ] [MainThread]: Concurrency: 1 threads (target='dev')
+[0m16:39:23.507003 [info ] [MainThread]: 
+[0m16:39:23.589691 [debug] [MainThread]: Acquiring new clickhouse connection 'master'
+[0m16:39:23.715481 [debug] [ThreadPool]: Acquiring new clickhouse connection 'list_'
+[0m16:39:23.899743 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m16:39:26.306803 [debug] [ThreadPool]: dbt_clickhouse adapter: On list_: /* {"app": "dbt", "dbt_version": "1.11.12", "profile_name": "nyc_taxi", "target_name": "dev", "connection_name": "list_"} */
+
+    select name from system.databases
+  ...
+[0m16:39:26.343219 [debug] [ThreadPool]: dbt_clickhouse adapter: SQL status: OK in 0.01 seconds
+[0m16:39:27.386040 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly list_, now list__medallion)
+[0m16:39:27.569758 [debug] [ThreadPool]: dbt_clickhouse adapter: On list__medallion: /* {"app": "dbt", "dbt_version": "1.11.12", "profile_name": "nyc_taxi", "target_name": "dev", "connection_name": "list__medallion"} */
+with mv_sources as (
+      -- Find all MVs and their target tables (database and name of the MV, plus the SELECT SQL)
+      select
+        name as mv_name,
+        database as mv_database,
+        any(as_select) as mv_sql,
+        any(replaceRegexpOne(create_table_query, '.*TO\\s+`?([^`\\s(]+)`?\\.`?([^`\\s(]+)`?.*', '\\1.\\2')) as target_fqn
+      
+      from system.tables
+      
+      where engine = 'MaterializedView'
+        and create_table_query like '%TO %'
+      group by mv_name, mv_database
+    )
+    select
+      t.name as name,
+      t.database as schema,
+      multiIf(
+        t.engine = 'MaterializedView', 'materialized_view',
+        t.engine = 'View', 'view',
+        t.engine = 'Dictionary', 'dictionary',
+        'table'
+      ) as type,
+      db.engine as db_engine,
+      groupArrayIf(
+        map('schema', mv_sources.mv_database, 'name', mv_sources.mv_name, 'sql', mv_sources.mv_sql),
+        mv_sources.mv_name != ''
+      ) as mvs_pointing_to_it,0 as is_on_cluster
+        from system.tables as t
+      
+        join system.databases as db on t.database = db.name
+        left join mv_sources on mv_sources.target_fqn = concat(t.database, '.', t.name)
+      where schema = 'medallion'
+      group by name, schema, type, db_engine
+
+  ...
+[0m16:39:30.060869 [debug] [ThreadPool]: dbt_clickhouse adapter: SQL status: OK in 2.44 seconds
+[0m16:39:30.095623 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '2d32c046-3c0d-48f8-b281-cabada2750a7', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x707b2efa6330>]}
+[0m16:39:30.146729 [debug] [Thread-1 (]: Began running node model.nyc_taxi.silver_nyc_taxi
+[0m16:39:30.163786 [info ] [Thread-1 (]: 1 of 2 START sql table model `medallion`.`silver_nyc_taxi` ..................... [RUN]
+[0m16:39:30.179286 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly list__medallion, now model.nyc_taxi.silver_nyc_taxi)
+[0m16:39:30.191667 [debug] [Thread-1 (]: Began compiling node model.nyc_taxi.silver_nyc_taxi
+[0m16:39:30.280335 [debug] [Thread-1 (]: Writing injected SQL for node "model.nyc_taxi.silver_nyc_taxi"
+[0m16:39:30.390207 [debug] [Thread-1 (]: Began executing node model.nyc_taxi.silver_nyc_taxi
+[0m16:39:31.080314 [debug] [Thread-1 (]: dbt_clickhouse adapter: On model.nyc_taxi.silver_nyc_taxi: /* {"app": "dbt", "dbt_version": "1.11.12", "profile_name": "nyc_taxi", "target_name": "dev", "node_id": "model.nyc_taxi.silver_nyc_taxi"} */
+
+            
+
+    
+        create table `medallion`.`silver_nyc_taxi__dbt_backup`
+        
+  
+        
+  engine = MergeTree()
+        
+      order by (tuple())
+        
+        
+        
+        
+                    -- end_of_sql
+                    SETTINGS replicated_deduplication_window='0'
+
+                    
+            empty
+          as (
+            
+
+SELECT
+    VendorID,
+    tpep_pickup_datetime AS pickup_datetime,
+    tpep_dropoff_datetime AS dropoff_datetime,
+    toInt32(passenger_count) AS passenger_count,
+    trip_distance,
+    toInt32(PULocationID) AS PULocationID,
+    toInt32(DOLocationID) AS DOLocationID,
+    toInt32(payment_type) AS payment_type,
+    fare_amount,
+    tip_amount,
+    total_amount,
+    dateDiff('minute', tpep_pickup_datetime, tpep_dropoff_datetime) AS trip_duration_minutes
+FROM medallion.bronze_nyc_taxi
+WHERE
+    trip_distance > 0
+    AND fare_amount > 0
+    AND passenger_count > 0
+    AND tpep_pickup_datetime >= '2024-01-01'
+    AND tpep_pickup_datetime < '2024-02-01'
+          )
+        
+        ...
+[0m16:39:31.163536 [debug] [Thread-1 (]: dbt_clickhouse adapter: SQL status: OK in 0.08 seconds
+[0m16:39:31.355523 [debug] [Thread-1 (]: dbt_clickhouse adapter: On model.nyc_taxi.silver_nyc_taxi: /* {"app": "dbt", "dbt_version": "1.11.12", "profile_name": "nyc_taxi", "target_name": "dev", "node_id": "model.nyc_taxi.silver_nyc_taxi"} */
+
+    select name, type from system.columns where table = 'silver_nyc_taxi__dbt_backup'
+    
+      
+        and database = 'medallion'
+      
+    
+    order by position
+  ...
+[0m16:39:31.383281 [debug] [Thread-1 (]: dbt_clickhouse adapter: SQL status: OK in 0.02 seconds
+[0m16:39:31.422938 [debug] [Thread-1 (]: Writing runtime sql for node "model.nyc_taxi.silver_nyc_taxi"
+[0m16:39:31.523544 [debug] [Thread-1 (]: dbt_clickhouse adapter: On model.nyc_taxi.silver_nyc_taxi: /* {"app": "dbt", "dbt_version": "1.11.12", "profile_name": "nyc_taxi", "target_name": "dev", "node_id": "model.nyc_taxi.silver_nyc_taxi"} */
+
+  
+    
+    
+    
+        
+         
+
+
+        
+  
+
+  insert into `medallion`.`silver_nyc_taxi__dbt_backup`
+        ("VendorID", "pickup_datetime", "dropoff_datetime", "passenger_count", "trip_distance", "PULocationID", "DOLocationID", "payment_type", "fare_amount", "tip_amount", "total_amount", "trip_duration_minutes")
+
+SELECT
+    VendorID,
+    tpep_pickup_datetime AS pickup_datetime,
+    tpep_dropoff_datetime AS dropoff_datetime,
+    toInt32(passenger_count) AS passenger_count,
+    trip_distance,
+    toInt32(PULocationID) AS PULocationID,
+    toInt32(DOLocationID) AS DOLocationID,
+    toInt32(payment_type) AS payment_type,
+    fare_amount,
+    tip_amount,
+    total_amount,
+    dateDiff('minute', tpep_pickup_datetime, tpep_dropoff_datetime) AS trip_duration_minutes
+FROM medallion.bronze_nyc_taxi
+WHERE
+    trip_distance > 0
+    AND fare_amount > 0
+    AND passenger_count > 0
+    AND tpep_pickup_datetime >= '2024-01-01'
+    AND tpep_pickup_datetime < '2024-02-01'
+  ...
+[0m16:39:47.271338 [debug] [Thread-1 (]: dbt_clickhouse adapter: SQL status: OK in 15.74 seconds
+[0m16:39:47.317001 [debug] [Thread-1 (]: dbt_clickhouse adapter: On model.nyc_taxi.silver_nyc_taxi: /* {"app": "dbt", "dbt_version": "1.11.12", "profile_name": "nyc_taxi", "target_name": "dev", "node_id": "model.nyc_taxi.silver_nyc_taxi"} */
+EXCHANGE TABLES `medallion`.`silver_nyc_taxi__dbt_backup` AND `medallion`.`silver_nyc_taxi` 
+  
+  ...
+[0m16:39:47.335714 [debug] [Thread-1 (]: dbt_clickhouse adapter: SQL status: OK in 0.01 seconds
+[0m16:39:47.580981 [debug] [Thread-1 (]: dbt_clickhouse adapter: On model.nyc_taxi.silver_nyc_taxi: /* {"app": "dbt", "dbt_version": "1.11.12", "profile_name": "nyc_taxi", "target_name": "dev", "node_id": "model.nyc_taxi.silver_nyc_taxi"} */
+drop table if exists `medallion`.`silver_nyc_taxi__dbt_backup` 
+  ...
+[0m16:39:47.600490 [debug] [Thread-1 (]: dbt_clickhouse adapter: SQL status: OK in 0.01 seconds
+[0m16:39:47.650321 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '2d32c046-3c0d-48f8-b281-cabada2750a7', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x707b2edeade0>]}
+[0m16:39:47.705640 [info ] [Thread-1 (]: 1 of 2 OK created sql table model `medallion`.`silver_nyc_taxi` ................ [[32mOK[0m in 17.47s]
+[0m16:39:47.775615 [debug] [Thread-1 (]: Finished running node model.nyc_taxi.silver_nyc_taxi
+[0m16:39:47.815971 [debug] [Thread-1 (]: Began running node model.nyc_taxi.gold_nyc_taxi_daily
+[0m16:39:47.832241 [info ] [Thread-1 (]: 2 of 2 START sql table model `medallion`.`gold_nyc_taxi_daily` ................. [RUN]
+[0m16:39:47.841826 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.nyc_taxi.silver_nyc_taxi, now model.nyc_taxi.gold_nyc_taxi_daily)
+[0m16:39:47.848655 [debug] [Thread-1 (]: Began compiling node model.nyc_taxi.gold_nyc_taxi_daily
+[0m16:39:47.884320 [debug] [Thread-1 (]: Writing injected SQL for node "model.nyc_taxi.gold_nyc_taxi_daily"
+[0m16:39:47.999200 [debug] [Thread-1 (]: Began executing node model.nyc_taxi.gold_nyc_taxi_daily
+[0m16:39:48.023125 [debug] [Thread-1 (]: dbt_clickhouse adapter: On model.nyc_taxi.gold_nyc_taxi_daily: /* {"app": "dbt", "dbt_version": "1.11.12", "profile_name": "nyc_taxi", "target_name": "dev", "node_id": "model.nyc_taxi.gold_nyc_taxi_daily"} */
+
+            
+
+    
+        create table `medallion`.`gold_nyc_taxi_daily__dbt_backup`
+        
+  
+        
+  engine = MergeTree()
+        
+      order by (tuple())
+        
+        
+        
+        
+                    -- end_of_sql
+                    SETTINGS replicated_deduplication_window='0'
+
+                    
+            empty
+          as (
+            
+
+SELECT
+    toDate(pickup_datetime) AS date,
+    COUNT(*) AS total_trips,
+    AVG(fare_amount) AS avg_fare,
+    AVG(trip_distance) AS avg_trip_distance,
+    AVG(trip_duration_minutes) AS avg_duration_mins,
+    AVG(passenger_count) AS avg_passengers,
+    SUM(total_amount) AS total_revenue
+FROM `medallion`.`silver_nyc_taxi`
+GROUP BY date
+ORDER BY date
+          )
+        
+        ...
+[0m16:39:48.087896 [debug] [Thread-1 (]: dbt_clickhouse adapter: SQL status: OK in 0.05 seconds
+[0m16:39:48.117916 [debug] [Thread-1 (]: dbt_clickhouse adapter: On model.nyc_taxi.gold_nyc_taxi_daily: /* {"app": "dbt", "dbt_version": "1.11.12", "profile_name": "nyc_taxi", "target_name": "dev", "node_id": "model.nyc_taxi.gold_nyc_taxi_daily"} */
+
+    select name, type from system.columns where table = 'gold_nyc_taxi_daily__dbt_backup'
+    
+      
+        and database = 'medallion'
+      
+    
+    order by position
+  ...
+[0m16:39:48.138667 [debug] [Thread-1 (]: dbt_clickhouse adapter: SQL status: OK in 0.01 seconds
+[0m16:39:48.151937 [debug] [Thread-1 (]: Writing runtime sql for node "model.nyc_taxi.gold_nyc_taxi_daily"
+[0m16:39:48.246400 [debug] [Thread-1 (]: dbt_clickhouse adapter: On model.nyc_taxi.gold_nyc_taxi_daily: /* {"app": "dbt", "dbt_version": "1.11.12", "profile_name": "nyc_taxi", "target_name": "dev", "node_id": "model.nyc_taxi.gold_nyc_taxi_daily"} */
+
+  
+    
+    
+    
+        
+         
+
+
+        
+  
+
+  insert into `medallion`.`gold_nyc_taxi_daily__dbt_backup`
+        ("date", "total_trips", "avg_fare", "avg_trip_distance", "avg_duration_mins", "avg_passengers", "total_revenue")
+
+SELECT
+    toDate(pickup_datetime) AS date,
+    COUNT(*) AS total_trips,
+    AVG(fare_amount) AS avg_fare,
+    AVG(trip_distance) AS avg_trip_distance,
+    AVG(trip_duration_minutes) AS avg_duration_mins,
+    AVG(passenger_count) AS avg_passengers,
+    SUM(total_amount) AS total_revenue
+FROM `medallion`.`silver_nyc_taxi`
+GROUP BY date
+ORDER BY date
+  ...
+[0m16:39:49.130971 [debug] [Thread-1 (]: dbt_clickhouse adapter: SQL status: OK in 0.88 seconds
+[0m16:39:49.141527 [debug] [Thread-1 (]: dbt_clickhouse adapter: On model.nyc_taxi.gold_nyc_taxi_daily: /* {"app": "dbt", "dbt_version": "1.11.12", "profile_name": "nyc_taxi", "target_name": "dev", "node_id": "model.nyc_taxi.gold_nyc_taxi_daily"} */
+EXCHANGE TABLES `medallion`.`gold_nyc_taxi_daily__dbt_backup` AND `medallion`.`gold_nyc_taxi_daily` 
+  
+  ...
+[0m16:39:49.163382 [debug] [Thread-1 (]: dbt_clickhouse adapter: SQL status: OK in 0.01 seconds
+[0m16:39:49.188349 [debug] [Thread-1 (]: dbt_clickhouse adapter: On model.nyc_taxi.gold_nyc_taxi_daily: /* {"app": "dbt", "dbt_version": "1.11.12", "profile_name": "nyc_taxi", "target_name": "dev", "node_id": "model.nyc_taxi.gold_nyc_taxi_daily"} */
+drop table if exists `medallion`.`gold_nyc_taxi_daily__dbt_backup` 
+  ...
+[0m16:39:49.216214 [debug] [Thread-1 (]: dbt_clickhouse adapter: SQL status: OK in 0.02 seconds
+[0m16:39:49.230401 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '2d32c046-3c0d-48f8-b281-cabada2750a7', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x707b2c29fe60>]}
+[0m16:39:49.244360 [info ] [Thread-1 (]: 2 of 2 OK created sql table model `medallion`.`gold_nyc_taxi_daily` ............ [[32mOK[0m in 1.39s]
+[0m16:39:49.256895 [debug] [Thread-1 (]: Finished running node model.nyc_taxi.gold_nyc_taxi_daily
+[0m16:39:49.269393 [debug] [MainThread]: Connection 'master' was properly closed.
+[0m16:39:49.274860 [debug] [MainThread]: Connection 'model.nyc_taxi.gold_nyc_taxi_daily' was left open.
+[0m16:39:49.283842 [debug] [MainThread]: On model.nyc_taxi.gold_nyc_taxi_daily: Close
+[0m16:39:49.292585 [info ] [MainThread]: 
+[0m16:39:49.315958 [info ] [MainThread]: Finished running 2 table models in 0 hours 0 minutes and 25.70 seconds (25.70s).
+[0m16:39:49.324737 [debug] [MainThread]: Command end result
+[0m16:39:49.600127 [debug] [MainThread]: Wrote artifact WritableManifest to /opt/airflow/dbt/target/manifest.json
+[0m16:39:49.631174 [debug] [MainThread]: Wrote artifact SemanticManifest to /opt/airflow/dbt/target/semantic_manifest.json
+[0m16:39:49.710160 [debug] [MainThread]: Wrote artifact RunExecutionResult to /opt/airflow/dbt/target/run_results.json
+[0m16:39:49.715984 [info ] [MainThread]: 
+[0m16:39:49.723219 [info ] [MainThread]: [32mCompleted successfully[0m
+[0m16:39:49.731574 [info ] [MainThread]: 
+[0m16:39:49.752726 [info ] [MainThread]: Done. PASS=2 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=2
+[0m16:39:49.818711 [debug] [MainThread]: Resource report: {"command_name": "run", "command_success": true, "command_wall_clock_time": 53.31715, "process_in_blocks": "119784", "process_kernel_time": 9.11572, "process_mem_max_rss": "128288", "process_out_blocks": "1936", "process_user_time": 48.473167}
+[0m16:39:49.834644 [debug] [MainThread]: Command `dbt run` succeeded at 16:39:49.833564 after 53.34 seconds
+[0m16:39:49.847082 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x707b2f22c500>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x707b30879b80>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x707b2ea3f260>]}
+[0m16:39:49.859040 [debug] [MainThread]: Flushing usage events
+[0m16:39:51.183925 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m17:31:19.372493 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7b6c3fffa810>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7b6c3f12d130>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7b6c3e19a330>]}
+
+
+============================== 17:31:19.394642 | 2d7cc0ad-dddb-4cbf-a006-7740dc5cb8a3 ==============================
+[0m17:31:19.394642 [info ] [MainThread]: Running with dbt=1.11.12
+[0m17:31:19.400650 [debug] [MainThread]: running dbt with arguments {'introspect': 'True', 'use_colors': 'True', 'printer_width': '80', 'log_cache_events': 'False', 'log_format': 'default', 'profiles_dir': '.', 'debug': 'False', 'send_anonymous_usage_stats': 'True', 'no_print': 'None', 'log_path': '/opt/airflow/dbt/logs', 'empty': 'False', 'use_experimental_parser': 'False', 'partial_parse': 'True', 'warn_error': 'None', 'invocation_command': 'dbt run --profiles-dir .', 'indirect_selection': 'eager', 'version_check': 'True', 'cache_selected_only': 'False', 'quiet': 'False', 'fail_fast': 'False', 'target_path': 'None', 'static_parser': 'True', 'write_json': 'True', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])'}
+[0m17:31:20.508874 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '2d7cc0ad-dddb-4cbf-a006-7740dc5cb8a3', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7b6c3e1c87a0>]}
+[0m17:31:20.694642 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': '2d7cc0ad-dddb-4cbf-a006-7740dc5cb8a3', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7b6c3dab02c0>]}
+[0m17:31:20.702295 [info ] [MainThread]: Registered adapter: clickhouse=1.10.1
+[0m17:31:20.981833 [debug] [MainThread]: checksum: f368f5348cf42803b94ef7fb8257ecf3bf9a9a16dd9c8c51fe5172f2dbeb457f, vars: {}, profile: , target: , version: 1.11.12
+[0m17:31:21.642917 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 0 files added, 0 files changed.
+[0m17:31:21.646356 [debug] [MainThread]: Nothing changed, skipping partial parsing.
+[0m17:31:21.650012 [debug] [MainThread]: Partial parsing enabled, no changes found, skipping parsing
+[0m17:31:21.670765 [warn ] [MainThread]: [[33mWARNING[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.
+There are 1 unused configuration paths:
+- models.nyc_taxi.bronze
+[0m17:31:21.735135 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': '2d7cc0ad-dddb-4cbf-a006-7740dc5cb8a3', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7b6c3cb696d0>]}
+[0m17:31:21.963796 [debug] [MainThread]: Wrote artifact WritableManifest to /opt/airflow/dbt/target/manifest.json
+[0m17:31:21.980424 [debug] [MainThread]: Wrote artifact SemanticManifest to /opt/airflow/dbt/target/semantic_manifest.json
+[0m17:31:22.108647 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': '2d7cc0ad-dddb-4cbf-a006-7740dc5cb8a3', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7b6c3c933e00>]}
+[0m17:31:22.114141 [info ] [MainThread]: Found 2 models, 530 macros
+[0m17:31:22.118864 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '2d7cc0ad-dddb-4cbf-a006-7740dc5cb8a3', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7b6c3c8e1a00>]}
+[0m17:31:22.135462 [info ] [MainThread]: 
+[0m17:31:22.141510 [info ] [MainThread]: Concurrency: 1 threads (target='dev')
+[0m17:31:22.145780 [info ] [MainThread]: 
+[0m17:31:22.151032 [debug] [MainThread]: Acquiring new clickhouse connection 'master'
+[0m17:31:22.181446 [debug] [ThreadPool]: Acquiring new clickhouse connection 'list_'
+[0m17:31:22.224545 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m17:31:22.907038 [debug] [ThreadPool]: dbt_clickhouse adapter: On list_: /* {"app": "dbt", "dbt_version": "1.11.12", "profile_name": "nyc_taxi", "target_name": "dev", "connection_name": "list_"} */
+
+    select name from system.databases
+  ...
+[0m17:31:22.923397 [debug] [ThreadPool]: dbt_clickhouse adapter: SQL status: OK in 0.01 seconds
+[0m17:31:23.162536 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly list_, now list__medallion)
+[0m17:31:23.184895 [debug] [ThreadPool]: dbt_clickhouse adapter: On list__medallion: /* {"app": "dbt", "dbt_version": "1.11.12", "profile_name": "nyc_taxi", "target_name": "dev", "connection_name": "list__medallion"} */
+with mv_sources as (
+      -- Find all MVs and their target tables (database and name of the MV, plus the SELECT SQL)
+      select
+        name as mv_name,
+        database as mv_database,
+        any(as_select) as mv_sql,
+        any(replaceRegexpOne(create_table_query, '.*TO\\s+`?([^`\\s(]+)`?\\.`?([^`\\s(]+)`?.*', '\\1.\\2')) as target_fqn
+      
+      from system.tables
+      
+      where engine = 'MaterializedView'
+        and create_table_query like '%TO %'
+      group by mv_name, mv_database
+    )
+    select
+      t.name as name,
+      t.database as schema,
+      multiIf(
+        t.engine = 'MaterializedView', 'materialized_view',
+        t.engine = 'View', 'view',
+        t.engine = 'Dictionary', 'dictionary',
+        'table'
+      ) as type,
+      db.engine as db_engine,
+      groupArrayIf(
+        map('schema', mv_sources.mv_database, 'name', mv_sources.mv_name, 'sql', mv_sources.mv_sql),
+        mv_sources.mv_name != ''
+      ) as mvs_pointing_to_it,0 as is_on_cluster
+        from system.tables as t
+      
+        join system.databases as db on t.database = db.name
+        left join mv_sources on mv_sources.target_fqn = concat(t.database, '.', t.name)
+      where schema = 'medallion'
+      group by name, schema, type, db_engine
+
+  ...
+[0m17:31:23.460150 [debug] [ThreadPool]: dbt_clickhouse adapter: SQL status: OK in 0.27 seconds
+[0m17:31:23.471805 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '2d7cc0ad-dddb-4cbf-a006-7740dc5cb8a3', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7b6c3c9ac620>]}
+[0m17:31:23.504077 [debug] [Thread-1 (]: Began running node model.nyc_taxi.silver_nyc_taxi
+[0m17:31:23.508715 [info ] [Thread-1 (]: 1 of 2 START sql table model `medallion`.`silver_nyc_taxi` ..................... [RUN]
+[0m17:31:23.514511 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly list__medallion, now model.nyc_taxi.silver_nyc_taxi)
+[0m17:31:23.517865 [debug] [Thread-1 (]: Began compiling node model.nyc_taxi.silver_nyc_taxi
+[0m17:31:23.540070 [debug] [Thread-1 (]: Writing injected SQL for node "model.nyc_taxi.silver_nyc_taxi"
+[0m17:31:23.575048 [debug] [Thread-1 (]: Began executing node model.nyc_taxi.silver_nyc_taxi
+[0m17:31:23.779658 [debug] [Thread-1 (]: dbt_clickhouse adapter: On model.nyc_taxi.silver_nyc_taxi: /* {"app": "dbt", "dbt_version": "1.11.12", "profile_name": "nyc_taxi", "target_name": "dev", "node_id": "model.nyc_taxi.silver_nyc_taxi"} */
+
+            
+
+    
+        create table `medallion`.`silver_nyc_taxi__dbt_backup`
+        
+  
+        
+  engine = MergeTree()
+        
+      order by (tuple())
+        
+        
+        
+        
+                    -- end_of_sql
+                    SETTINGS replicated_deduplication_window='0'
+
+                    
+            empty
+          as (
+            
+
+SELECT
+    VendorID,
+    tpep_pickup_datetime AS pickup_datetime,
+    tpep_dropoff_datetime AS dropoff_datetime,
+    toInt32(passenger_count) AS passenger_count,
+    trip_distance,
+    toInt32(PULocationID) AS PULocationID,
+    toInt32(DOLocationID) AS DOLocationID,
+    toInt32(payment_type) AS payment_type,
+    fare_amount,
+    tip_amount,
+    total_amount,
+    dateDiff('minute', tpep_pickup_datetime, tpep_dropoff_datetime) AS trip_duration_minutes
+FROM medallion.bronze_nyc_taxi
+WHERE
+    trip_distance > 0
+    AND fare_amount > 0
+    AND passenger_count > 0
+    AND tpep_pickup_datetime >= '2024-01-01'
+    AND tpep_pickup_datetime < '2024-02-01'
+          )
+        
+        ...
+[0m17:31:23.819534 [debug] [Thread-1 (]: dbt_clickhouse adapter: SQL status: OK in 0.04 seconds
+[0m17:31:23.895382 [debug] [Thread-1 (]: dbt_clickhouse adapter: On model.nyc_taxi.silver_nyc_taxi: /* {"app": "dbt", "dbt_version": "1.11.12", "profile_name": "nyc_taxi", "target_name": "dev", "node_id": "model.nyc_taxi.silver_nyc_taxi"} */
+
+    select name, type from system.columns where table = 'silver_nyc_taxi__dbt_backup'
+    
+      
+        and database = 'medallion'
+      
+    
+    order by position
+  ...
+[0m17:31:23.913718 [debug] [Thread-1 (]: dbt_clickhouse adapter: SQL status: OK in 0.01 seconds
+[0m17:31:23.925788 [debug] [Thread-1 (]: Writing runtime sql for node "model.nyc_taxi.silver_nyc_taxi"
+[0m17:31:23.951778 [debug] [Thread-1 (]: dbt_clickhouse adapter: On model.nyc_taxi.silver_nyc_taxi: /* {"app": "dbt", "dbt_version": "1.11.12", "profile_name": "nyc_taxi", "target_name": "dev", "node_id": "model.nyc_taxi.silver_nyc_taxi"} */
+
+  
+    
+    
+    
+        
+         
+
+
+        
+  
+
+  insert into `medallion`.`silver_nyc_taxi__dbt_backup`
+        ("VendorID", "pickup_datetime", "dropoff_datetime", "passenger_count", "trip_distance", "PULocationID", "DOLocationID", "payment_type", "fare_amount", "tip_amount", "total_amount", "trip_duration_minutes")
+
+SELECT
+    VendorID,
+    tpep_pickup_datetime AS pickup_datetime,
+    tpep_dropoff_datetime AS dropoff_datetime,
+    toInt32(passenger_count) AS passenger_count,
+    trip_distance,
+    toInt32(PULocationID) AS PULocationID,
+    toInt32(DOLocationID) AS DOLocationID,
+    toInt32(payment_type) AS payment_type,
+    fare_amount,
+    tip_amount,
+    total_amount,
+    dateDiff('minute', tpep_pickup_datetime, tpep_dropoff_datetime) AS trip_duration_minutes
+FROM medallion.bronze_nyc_taxi
+WHERE
+    trip_distance > 0
+    AND fare_amount > 0
+    AND passenger_count > 0
+    AND tpep_pickup_datetime >= '2024-01-01'
+    AND tpep_pickup_datetime < '2024-02-01'
+  ...
+[0m17:31:36.917229 [debug] [Thread-1 (]: dbt_clickhouse adapter: SQL status: OK in 12.96 seconds
+[0m17:31:36.938985 [debug] [Thread-1 (]: dbt_clickhouse adapter: On model.nyc_taxi.silver_nyc_taxi: /* {"app": "dbt", "dbt_version": "1.11.12", "profile_name": "nyc_taxi", "target_name": "dev", "node_id": "model.nyc_taxi.silver_nyc_taxi"} */
+EXCHANGE TABLES `medallion`.`silver_nyc_taxi__dbt_backup` AND `medallion`.`silver_nyc_taxi` 
+  
+  ...
+[0m17:31:36.951170 [debug] [Thread-1 (]: dbt_clickhouse adapter: SQL status: OK in 0.01 seconds
+[0m17:31:37.059039 [debug] [Thread-1 (]: dbt_clickhouse adapter: On model.nyc_taxi.silver_nyc_taxi: /* {"app": "dbt", "dbt_version": "1.11.12", "profile_name": "nyc_taxi", "target_name": "dev", "node_id": "model.nyc_taxi.silver_nyc_taxi"} */
+drop table if exists `medallion`.`silver_nyc_taxi__dbt_backup` 
+  ...
+[0m17:31:37.067453 [debug] [Thread-1 (]: dbt_clickhouse adapter: SQL status: OK in 0.00 seconds
+[0m17:31:37.081119 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '2d7cc0ad-dddb-4cbf-a006-7740dc5cb8a3', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7b6c3f884320>]}
+[0m17:31:37.085267 [info ] [Thread-1 (]: 1 of 2 OK created sql table model `medallion`.`silver_nyc_taxi` ................ [[32mOK[0m in 13.57s]
+[0m17:31:37.091497 [debug] [Thread-1 (]: Finished running node model.nyc_taxi.silver_nyc_taxi
+[0m17:31:37.096404 [debug] [Thread-1 (]: Began running node model.nyc_taxi.gold_nyc_taxi_daily
+[0m17:31:37.099738 [info ] [Thread-1 (]: 2 of 2 START sql table model `medallion`.`gold_nyc_taxi_daily` ................. [RUN]
+[0m17:31:37.103373 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.nyc_taxi.silver_nyc_taxi, now model.nyc_taxi.gold_nyc_taxi_daily)
+[0m17:31:37.107514 [debug] [Thread-1 (]: Began compiling node model.nyc_taxi.gold_nyc_taxi_daily
+[0m17:31:37.116106 [debug] [Thread-1 (]: Writing injected SQL for node "model.nyc_taxi.gold_nyc_taxi_daily"
+[0m17:31:37.145806 [debug] [Thread-1 (]: Began executing node model.nyc_taxi.gold_nyc_taxi_daily
+[0m17:31:37.160520 [debug] [Thread-1 (]: dbt_clickhouse adapter: On model.nyc_taxi.gold_nyc_taxi_daily: /* {"app": "dbt", "dbt_version": "1.11.12", "profile_name": "nyc_taxi", "target_name": "dev", "node_id": "model.nyc_taxi.gold_nyc_taxi_daily"} */
+
+            
+
+    
+        create table `medallion`.`gold_nyc_taxi_daily__dbt_backup`
+        
+  
+        
+  engine = MergeTree()
+        
+      order by (tuple())
+        
+        
+        
+        
+                    -- end_of_sql
+                    SETTINGS replicated_deduplication_window='0'
+
+                    
+            empty
+          as (
+            
+
+SELECT
+    toDate(pickup_datetime) AS date,
+    COUNT(*) AS total_trips,
+    AVG(fare_amount) AS avg_fare,
+    AVG(trip_distance) AS avg_trip_distance,
+    AVG(trip_duration_minutes) AS avg_duration_mins,
+    AVG(passenger_count) AS avg_passengers,
+    SUM(total_amount) AS total_revenue
+FROM `medallion`.`silver_nyc_taxi`
+GROUP BY date
+ORDER BY date
+          )
+        
+        ...
+[0m17:31:37.208165 [debug] [Thread-1 (]: dbt_clickhouse adapter: SQL status: OK in 0.04 seconds
+[0m17:31:37.218068 [debug] [Thread-1 (]: dbt_clickhouse adapter: On model.nyc_taxi.gold_nyc_taxi_daily: /* {"app": "dbt", "dbt_version": "1.11.12", "profile_name": "nyc_taxi", "target_name": "dev", "node_id": "model.nyc_taxi.gold_nyc_taxi_daily"} */
+
+    select name, type from system.columns where table = 'gold_nyc_taxi_daily__dbt_backup'
+    
+      
+        and database = 'medallion'
+      
+    
+    order by position
+  ...
+[0m17:31:37.245272 [debug] [Thread-1 (]: dbt_clickhouse adapter: SQL status: OK in 0.02 seconds
+[0m17:31:37.251945 [debug] [Thread-1 (]: Writing runtime sql for node "model.nyc_taxi.gold_nyc_taxi_daily"
+[0m17:31:37.282707 [debug] [Thread-1 (]: dbt_clickhouse adapter: On model.nyc_taxi.gold_nyc_taxi_daily: /* {"app": "dbt", "dbt_version": "1.11.12", "profile_name": "nyc_taxi", "target_name": "dev", "node_id": "model.nyc_taxi.gold_nyc_taxi_daily"} */
+
+  
+    
+    
+    
+        
+         
+
+
+        
+  
+
+  insert into `medallion`.`gold_nyc_taxi_daily__dbt_backup`
+        ("date", "total_trips", "avg_fare", "avg_trip_distance", "avg_duration_mins", "avg_passengers", "total_revenue")
+
+SELECT
+    toDate(pickup_datetime) AS date,
+    COUNT(*) AS total_trips,
+    AVG(fare_amount) AS avg_fare,
+    AVG(trip_distance) AS avg_trip_distance,
+    AVG(trip_duration_minutes) AS avg_duration_mins,
+    AVG(passenger_count) AS avg_passengers,
+    SUM(total_amount) AS total_revenue
+FROM `medallion`.`silver_nyc_taxi`
+GROUP BY date
+ORDER BY date
+  ...
+[0m17:31:38.715080 [debug] [Thread-1 (]: dbt_clickhouse adapter: SQL status: OK in 1.43 seconds
+[0m17:31:38.723196 [debug] [Thread-1 (]: dbt_clickhouse adapter: On model.nyc_taxi.gold_nyc_taxi_daily: /* {"app": "dbt", "dbt_version": "1.11.12", "profile_name": "nyc_taxi", "target_name": "dev", "node_id": "model.nyc_taxi.gold_nyc_taxi_daily"} */
+EXCHANGE TABLES `medallion`.`gold_nyc_taxi_daily__dbt_backup` AND `medallion`.`gold_nyc_taxi_daily` 
+  
+  ...
+[0m17:31:38.755984 [debug] [Thread-1 (]: dbt_clickhouse adapter: SQL status: OK in 0.02 seconds
+[0m17:31:38.794411 [debug] [Thread-1 (]: dbt_clickhouse adapter: On model.nyc_taxi.gold_nyc_taxi_daily: /* {"app": "dbt", "dbt_version": "1.11.12", "profile_name": "nyc_taxi", "target_name": "dev", "node_id": "model.nyc_taxi.gold_nyc_taxi_daily"} */
+drop table if exists `medallion`.`gold_nyc_taxi_daily__dbt_backup` 
+  ...
+[0m17:31:38.809280 [debug] [Thread-1 (]: dbt_clickhouse adapter: SQL status: OK in 0.01 seconds
+[0m17:31:38.829458 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '2d7cc0ad-dddb-4cbf-a006-7740dc5cb8a3', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7b6c39fdc620>]}
+[0m17:31:38.849408 [info ] [Thread-1 (]: 2 of 2 OK created sql table model `medallion`.`gold_nyc_taxi_daily` ............ [[32mOK[0m in 1.73s]
+[0m17:31:38.858025 [debug] [Thread-1 (]: Finished running node model.nyc_taxi.gold_nyc_taxi_daily
+[0m17:31:38.873534 [debug] [MainThread]: Connection 'master' was properly closed.
+[0m17:31:38.884292 [debug] [MainThread]: Connection 'model.nyc_taxi.gold_nyc_taxi_daily' was left open.
+[0m17:31:38.893631 [debug] [MainThread]: On model.nyc_taxi.gold_nyc_taxi_daily: Close
+[0m17:31:38.900778 [info ] [MainThread]: 
+[0m17:31:38.905657 [info ] [MainThread]: Finished running 2 table models in 0 hours 0 minutes and 16.75 seconds (16.75s).
+[0m17:31:38.912962 [debug] [MainThread]: Command end result
+[0m17:31:39.557649 [debug] [MainThread]: Wrote artifact WritableManifest to /opt/airflow/dbt/target/manifest.json
+[0m17:31:39.582281 [debug] [MainThread]: Wrote artifact SemanticManifest to /opt/airflow/dbt/target/semantic_manifest.json
+[0m17:31:39.654439 [debug] [MainThread]: Wrote artifact RunExecutionResult to /opt/airflow/dbt/target/run_results.json
+[0m17:31:39.664681 [info ] [MainThread]: 
+[0m17:31:39.670911 [info ] [MainThread]: [32mCompleted successfully[0m
+[0m17:31:39.675187 [info ] [MainThread]: 
+[0m17:31:39.680044 [info ] [MainThread]: Done. PASS=2 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=2
+[0m17:31:39.730480 [debug] [MainThread]: Resource report: {"command_name": "run", "command_success": true, "command_wall_clock_time": 20.526636, "process_in_blocks": "122104", "process_kernel_time": 2.533488, "process_mem_max_rss": "125804", "process_out_blocks": "0", "process_user_time": 10.100454}
+[0m17:31:39.741158 [debug] [MainThread]: Command `dbt run` succeeded at 17:31:39.740617 after 20.54 seconds
+[0m17:31:39.745163 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7b6c3fffa810>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7b6c3c7b6cf0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7b6c3c7b7d40>]}
+[0m17:31:39.754701 [debug] [MainThread]: Flushing usage events
+[0m17:31:40.987203 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m17:31:45.610163 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7457906f99d0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7457906cf560>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7457933fcfb0>]}
+
+
+============================== 17:31:45.644153 | 10682ce1-51b8-4599-aa79-4ffe71443907 ==============================
+[0m17:31:45.644153 [info ] [MainThread]: Running with dbt=1.11.12
+[0m17:31:45.648940 [debug] [MainThread]: running dbt with arguments {'fail_fast': 'False', 'log_cache_events': 'False', 'cache_selected_only': 'False', 'use_colors': 'True', 'quiet': 'False', 'debug': 'False', 'use_experimental_parser': 'False', 'static_parser': 'True', 'target_path': 'None', 'profiles_dir': '.', 'printer_width': '80', 'log_format': 'default', 'warn_error': 'None', 'empty': 'False', 'invocation_command': 'dbt run --profiles-dir .', 'indirect_selection': 'eager', 'write_json': 'True', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'send_anonymous_usage_stats': 'True', 'log_path': '/opt/airflow/dbt/logs', 'introspect': 'True', 'version_check': 'True', 'partial_parse': 'True', 'no_print': 'None'}
+[0m17:31:46.459191 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '10682ce1-51b8-4599-aa79-4ffe71443907', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x745791850770>]}
+[0m17:31:46.752710 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': '10682ce1-51b8-4599-aa79-4ffe71443907', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7457933f60f0>]}
+[0m17:31:46.758897 [info ] [MainThread]: Registered adapter: clickhouse=1.10.1
+[0m17:31:47.054620 [debug] [MainThread]: checksum: f368f5348cf42803b94ef7fb8257ecf3bf9a9a16dd9c8c51fe5172f2dbeb457f, vars: {}, profile: , target: , version: 1.11.12
+[0m17:31:47.546708 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 0 files added, 0 files changed.
+[0m17:31:47.549579 [debug] [MainThread]: Nothing changed, skipping partial parsing.
+[0m17:31:47.552893 [debug] [MainThread]: Partial parsing enabled, no changes found, skipping parsing
+[0m17:31:47.584287 [warn ] [MainThread]: [[33mWARNING[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.
+There are 1 unused configuration paths:
+- models.nyc_taxi.bronze
+[0m17:31:47.657227 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': '10682ce1-51b8-4599-aa79-4ffe71443907', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7457901c1850>]}
+[0m17:31:47.957837 [debug] [MainThread]: Wrote artifact WritableManifest to /opt/airflow/dbt/target/manifest.json
+[0m17:31:47.974568 [debug] [MainThread]: Wrote artifact SemanticManifest to /opt/airflow/dbt/target/semantic_manifest.json
+[0m17:31:48.023152 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': '10682ce1-51b8-4599-aa79-4ffe71443907', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x74578ff92900>]}
+[0m17:31:48.026715 [info ] [MainThread]: Found 2 models, 530 macros
+[0m17:31:48.030778 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '10682ce1-51b8-4599-aa79-4ffe71443907', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x74579001af00>]}
+[0m17:31:48.038924 [info ] [MainThread]: 
+[0m17:31:48.042998 [info ] [MainThread]: Concurrency: 1 threads (target='dev')
+[0m17:31:48.048454 [info ] [MainThread]: 
+[0m17:31:48.058568 [debug] [MainThread]: Acquiring new clickhouse connection 'master'
+[0m17:31:48.083991 [debug] [ThreadPool]: Acquiring new clickhouse connection 'list_'
+[0m17:31:48.117321 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m17:31:48.293970 [debug] [ThreadPool]: dbt_clickhouse adapter: On list_: /* {"app": "dbt", "dbt_version": "1.11.12", "profile_name": "nyc_taxi", "target_name": "dev", "connection_name": "list_"} */
+
+    select name from system.databases
+  ...
+[0m17:31:48.300256 [debug] [ThreadPool]: dbt_clickhouse adapter: SQL status: OK in 0.00 seconds
+[0m17:31:48.365675 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly list_, now list__medallion)
+[0m17:31:48.395122 [debug] [ThreadPool]: dbt_clickhouse adapter: On list__medallion: /* {"app": "dbt", "dbt_version": "1.11.12", "profile_name": "nyc_taxi", "target_name": "dev", "connection_name": "list__medallion"} */
+with mv_sources as (
+      -- Find all MVs and their target tables (database and name of the MV, plus the SELECT SQL)
+      select
+        name as mv_name,
+        database as mv_database,
+        any(as_select) as mv_sql,
+        any(replaceRegexpOne(create_table_query, '.*TO\\s+`?([^`\\s(]+)`?\\.`?([^`\\s(]+)`?.*', '\\1.\\2')) as target_fqn
+      
+      from system.tables
+      
+      where engine = 'MaterializedView'
+        and create_table_query like '%TO %'
+      group by mv_name, mv_database
+    )
+    select
+      t.name as name,
+      t.database as schema,
+      multiIf(
+        t.engine = 'MaterializedView', 'materialized_view',
+        t.engine = 'View', 'view',
+        t.engine = 'Dictionary', 'dictionary',
+        'table'
+      ) as type,
+      db.engine as db_engine,
+      groupArrayIf(
+        map('schema', mv_sources.mv_database, 'name', mv_sources.mv_name, 'sql', mv_sources.mv_sql),
+        mv_sources.mv_name != ''
+      ) as mvs_pointing_to_it,0 as is_on_cluster
+        from system.tables as t
+      
+        join system.databases as db on t.database = db.name
+        left join mv_sources on mv_sources.target_fqn = concat(t.database, '.', t.name)
+      where schema = 'medallion'
+      group by name, schema, type, db_engine
+
+  ...
+[0m17:31:48.448383 [debug] [ThreadPool]: dbt_clickhouse adapter: SQL status: OK in 0.05 seconds
+[0m17:31:48.456141 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '10682ce1-51b8-4599-aa79-4ffe71443907', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7457901fe1e0>]}
+[0m17:31:48.467681 [debug] [Thread-1 (]: Began running node model.nyc_taxi.silver_nyc_taxi
+[0m17:31:48.471940 [info ] [Thread-1 (]: 1 of 2 START sql table model `medallion`.`silver_nyc_taxi` ..................... [RUN]
+[0m17:31:48.475593 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly list__medallion, now model.nyc_taxi.silver_nyc_taxi)
+[0m17:31:48.478580 [debug] [Thread-1 (]: Began compiling node model.nyc_taxi.silver_nyc_taxi
+[0m17:31:48.499229 [debug] [Thread-1 (]: Writing injected SQL for node "model.nyc_taxi.silver_nyc_taxi"
+[0m17:31:48.524328 [debug] [Thread-1 (]: Began executing node model.nyc_taxi.silver_nyc_taxi
+[0m17:31:48.734655 [debug] [Thread-1 (]: dbt_clickhouse adapter: On model.nyc_taxi.silver_nyc_taxi: /* {"app": "dbt", "dbt_version": "1.11.12", "profile_name": "nyc_taxi", "target_name": "dev", "node_id": "model.nyc_taxi.silver_nyc_taxi"} */
+
+            
+
+    
+        create table `medallion`.`silver_nyc_taxi__dbt_backup`
+        
+  
+        
+  engine = MergeTree()
+        
+      order by (tuple())
+        
+        
+        
+        
+                    -- end_of_sql
+                    SETTINGS replicated_deduplication_window='0'
+
+                    
+            empty
+          as (
+            
+
+SELECT
+    VendorID,
+    tpep_pickup_datetime AS pickup_datetime,
+    tpep_dropoff_datetime AS dropoff_datetime,
+    toInt32(passenger_count) AS passenger_count,
+    trip_distance,
+    toInt32(PULocationID) AS PULocationID,
+    toInt32(DOLocationID) AS DOLocationID,
+    toInt32(payment_type) AS payment_type,
+    fare_amount,
+    tip_amount,
+    total_amount,
+    dateDiff('minute', tpep_pickup_datetime, tpep_dropoff_datetime) AS trip_duration_minutes
+FROM medallion.bronze_nyc_taxi
+WHERE
+    trip_distance > 0
+    AND fare_amount > 0
+    AND passenger_count > 0
+    AND tpep_pickup_datetime >= '2024-01-01'
+    AND tpep_pickup_datetime < '2024-02-01'
+          )
+        
+        ...
+[0m17:31:48.792229 [debug] [Thread-1 (]: dbt_clickhouse adapter: SQL status: OK in 0.05 seconds
+[0m17:31:48.864592 [debug] [Thread-1 (]: dbt_clickhouse adapter: On model.nyc_taxi.silver_nyc_taxi: /* {"app": "dbt", "dbt_version": "1.11.12", "profile_name": "nyc_taxi", "target_name": "dev", "node_id": "model.nyc_taxi.silver_nyc_taxi"} */
+
+    select name, type from system.columns where table = 'silver_nyc_taxi__dbt_backup'
+    
+      
+        and database = 'medallion'
+      
+    
+    order by position
+  ...
+[0m17:31:48.882467 [debug] [Thread-1 (]: dbt_clickhouse adapter: SQL status: OK in 0.01 seconds
+[0m17:31:48.904490 [debug] [Thread-1 (]: Writing runtime sql for node "model.nyc_taxi.silver_nyc_taxi"
+[0m17:31:48.933026 [debug] [Thread-1 (]: dbt_clickhouse adapter: On model.nyc_taxi.silver_nyc_taxi: /* {"app": "dbt", "dbt_version": "1.11.12", "profile_name": "nyc_taxi", "target_name": "dev", "node_id": "model.nyc_taxi.silver_nyc_taxi"} */
+
+  
+    
+    
+    
+        
+         
+
+
+        
+  
+
+  insert into `medallion`.`silver_nyc_taxi__dbt_backup`
+        ("VendorID", "pickup_datetime", "dropoff_datetime", "passenger_count", "trip_distance", "PULocationID", "DOLocationID", "payment_type", "fare_amount", "tip_amount", "total_amount", "trip_duration_minutes")
+
+SELECT
+    VendorID,
+    tpep_pickup_datetime AS pickup_datetime,
+    tpep_dropoff_datetime AS dropoff_datetime,
+    toInt32(passenger_count) AS passenger_count,
+    trip_distance,
+    toInt32(PULocationID) AS PULocationID,
+    toInt32(DOLocationID) AS DOLocationID,
+    toInt32(payment_type) AS payment_type,
+    fare_amount,
+    tip_amount,
+    total_amount,
+    dateDiff('minute', tpep_pickup_datetime, tpep_dropoff_datetime) AS trip_duration_minutes
+FROM medallion.bronze_nyc_taxi
+WHERE
+    trip_distance > 0
+    AND fare_amount > 0
+    AND passenger_count > 0
+    AND tpep_pickup_datetime >= '2024-01-01'
+    AND tpep_pickup_datetime < '2024-02-01'
+  ...
+[0m17:32:00.870564 [debug] [Thread-1 (]: dbt_clickhouse adapter: SQL status: OK in 11.93 seconds
+[0m17:32:00.886336 [debug] [Thread-1 (]: dbt_clickhouse adapter: On model.nyc_taxi.silver_nyc_taxi: /* {"app": "dbt", "dbt_version": "1.11.12", "profile_name": "nyc_taxi", "target_name": "dev", "node_id": "model.nyc_taxi.silver_nyc_taxi"} */
+EXCHANGE TABLES `medallion`.`silver_nyc_taxi__dbt_backup` AND `medallion`.`silver_nyc_taxi` 
+  
+  ...
+[0m17:32:00.898964 [debug] [Thread-1 (]: dbt_clickhouse adapter: SQL status: OK in 0.01 seconds
+[0m17:32:00.994459 [debug] [Thread-1 (]: dbt_clickhouse adapter: On model.nyc_taxi.silver_nyc_taxi: /* {"app": "dbt", "dbt_version": "1.11.12", "profile_name": "nyc_taxi", "target_name": "dev", "node_id": "model.nyc_taxi.silver_nyc_taxi"} */
+drop table if exists `medallion`.`silver_nyc_taxi__dbt_backup` 
+  ...
+[0m17:32:01.003156 [debug] [Thread-1 (]: dbt_clickhouse adapter: SQL status: OK in 0.00 seconds
+[0m17:32:01.018335 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '10682ce1-51b8-4599-aa79-4ffe71443907', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x74578f49cdd0>]}
+[0m17:32:01.032169 [info ] [Thread-1 (]: 1 of 2 OK created sql table model `medallion`.`silver_nyc_taxi` ................ [[32mOK[0m in 12.54s]
+[0m17:32:01.038877 [debug] [Thread-1 (]: Finished running node model.nyc_taxi.silver_nyc_taxi
+[0m17:32:01.044585 [debug] [Thread-1 (]: Began running node model.nyc_taxi.gold_nyc_taxi_daily
+[0m17:32:01.049028 [info ] [Thread-1 (]: 2 of 2 START sql table model `medallion`.`gold_nyc_taxi_daily` ................. [RUN]
+[0m17:32:01.053794 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.nyc_taxi.silver_nyc_taxi, now model.nyc_taxi.gold_nyc_taxi_daily)
+[0m17:32:01.057784 [debug] [Thread-1 (]: Began compiling node model.nyc_taxi.gold_nyc_taxi_daily
+[0m17:32:01.068521 [debug] [Thread-1 (]: Writing injected SQL for node "model.nyc_taxi.gold_nyc_taxi_daily"
+[0m17:32:01.207700 [debug] [Thread-1 (]: Began executing node model.nyc_taxi.gold_nyc_taxi_daily
+[0m17:32:01.221522 [debug] [Thread-1 (]: dbt_clickhouse adapter: On model.nyc_taxi.gold_nyc_taxi_daily: /* {"app": "dbt", "dbt_version": "1.11.12", "profile_name": "nyc_taxi", "target_name": "dev", "node_id": "model.nyc_taxi.gold_nyc_taxi_daily"} */
+
+            
+
+    
+        create table `medallion`.`gold_nyc_taxi_daily__dbt_backup`
+        
+  
+        
+  engine = MergeTree()
+        
+      order by (tuple())
+        
+        
+        
+        
+                    -- end_of_sql
+                    SETTINGS replicated_deduplication_window='0'
+
+                    
+            empty
+          as (
+            
+
+SELECT
+    toDate(pickup_datetime) AS date,
+    COUNT(*) AS total_trips,
+    AVG(fare_amount) AS avg_fare,
+    AVG(trip_distance) AS avg_trip_distance,
+    AVG(trip_duration_minutes) AS avg_duration_mins,
+    AVG(passenger_count) AS avg_passengers,
+    SUM(total_amount) AS total_revenue
+FROM `medallion`.`silver_nyc_taxi`
+GROUP BY date
+ORDER BY date
+          )
+        
+        ...
+[0m17:32:04.199904 [debug] [Thread-1 (]: dbt_clickhouse adapter: SQL status: OK in 2.97 seconds
+[0m17:32:04.218109 [debug] [Thread-1 (]: dbt_clickhouse adapter: On model.nyc_taxi.gold_nyc_taxi_daily: /* {"app": "dbt", "dbt_version": "1.11.12", "profile_name": "nyc_taxi", "target_name": "dev", "node_id": "model.nyc_taxi.gold_nyc_taxi_daily"} */
+
+    select name, type from system.columns where table = 'gold_nyc_taxi_daily__dbt_backup'
+    
+      
+        and database = 'medallion'
+      
+    
+    order by position
+  ...
+[0m17:32:04.236396 [debug] [Thread-1 (]: dbt_clickhouse adapter: SQL status: OK in 0.01 seconds
+[0m17:32:04.255187 [debug] [Thread-1 (]: Writing runtime sql for node "model.nyc_taxi.gold_nyc_taxi_daily"
+[0m17:32:04.303483 [debug] [Thread-1 (]: dbt_clickhouse adapter: On model.nyc_taxi.gold_nyc_taxi_daily: /* {"app": "dbt", "dbt_version": "1.11.12", "profile_name": "nyc_taxi", "target_name": "dev", "node_id": "model.nyc_taxi.gold_nyc_taxi_daily"} */
+
+  
+    
+    
+    
+        
+         
+
+
+        
+  
+
+  insert into `medallion`.`gold_nyc_taxi_daily__dbt_backup`
+        ("date", "total_trips", "avg_fare", "avg_trip_distance", "avg_duration_mins", "avg_passengers", "total_revenue")
+
+SELECT
+    toDate(pickup_datetime) AS date,
+    COUNT(*) AS total_trips,
+    AVG(fare_amount) AS avg_fare,
+    AVG(trip_distance) AS avg_trip_distance,
+    AVG(trip_duration_minutes) AS avg_duration_mins,
+    AVG(passenger_count) AS avg_passengers,
+    SUM(total_amount) AS total_revenue
+FROM `medallion`.`silver_nyc_taxi`
+GROUP BY date
+ORDER BY date
+  ...
+[0m17:32:05.024847 [debug] [Thread-1 (]: dbt_clickhouse adapter: SQL status: OK in 0.70 seconds
+[0m17:32:05.031275 [debug] [Thread-1 (]: dbt_clickhouse adapter: On model.nyc_taxi.gold_nyc_taxi_daily: /* {"app": "dbt", "dbt_version": "1.11.12", "profile_name": "nyc_taxi", "target_name": "dev", "node_id": "model.nyc_taxi.gold_nyc_taxi_daily"} */
+EXCHANGE TABLES `medallion`.`gold_nyc_taxi_daily__dbt_backup` AND `medallion`.`gold_nyc_taxi_daily` 
+  
+  ...
+[0m17:32:05.042312 [debug] [Thread-1 (]: dbt_clickhouse adapter: SQL status: OK in 0.01 seconds
+[0m17:32:05.057396 [debug] [Thread-1 (]: dbt_clickhouse adapter: On model.nyc_taxi.gold_nyc_taxi_daily: /* {"app": "dbt", "dbt_version": "1.11.12", "profile_name": "nyc_taxi", "target_name": "dev", "node_id": "model.nyc_taxi.gold_nyc_taxi_daily"} */
+drop table if exists `medallion`.`gold_nyc_taxi_daily__dbt_backup` 
+  ...
+[0m17:32:05.067719 [debug] [Thread-1 (]: dbt_clickhouse adapter: SQL status: OK in 0.01 seconds
+[0m17:32:05.075965 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '10682ce1-51b8-4599-aa79-4ffe71443907', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x74578efe1e50>]}
+[0m17:32:05.081043 [info ] [Thread-1 (]: 2 of 2 OK created sql table model `medallion`.`gold_nyc_taxi_daily` ............ [[32mOK[0m in 4.02s]
+[0m17:32:05.087288 [debug] [Thread-1 (]: Finished running node model.nyc_taxi.gold_nyc_taxi_daily
+[0m17:32:05.102528 [debug] [MainThread]: Connection 'master' was properly closed.
+[0m17:32:05.112442 [debug] [MainThread]: Connection 'model.nyc_taxi.gold_nyc_taxi_daily' was left open.
+[0m17:32:05.119172 [debug] [MainThread]: On model.nyc_taxi.gold_nyc_taxi_daily: Close
+[0m17:32:05.124878 [info ] [MainThread]: 
+[0m17:32:05.137992 [info ] [MainThread]: Finished running 2 table models in 0 hours 0 minutes and 17.07 seconds (17.07s).
+[0m17:32:05.146559 [debug] [MainThread]: Command end result
+[0m17:32:05.719300 [debug] [MainThread]: Wrote artifact WritableManifest to /opt/airflow/dbt/target/manifest.json
+[0m17:32:05.749693 [debug] [MainThread]: Wrote artifact SemanticManifest to /opt/airflow/dbt/target/semantic_manifest.json
+[0m17:32:05.815450 [debug] [MainThread]: Wrote artifact RunExecutionResult to /opt/airflow/dbt/target/run_results.json
+[0m17:32:05.821468 [info ] [MainThread]: 
+[0m17:32:05.834015 [info ] [MainThread]: [32mCompleted successfully[0m
+[0m17:32:05.864746 [info ] [MainThread]: 
+[0m17:32:05.880276 [info ] [MainThread]: Done. PASS=2 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=2
+[0m17:32:05.919078 [debug] [MainThread]: Resource report: {"command_name": "run", "command_success": true, "command_wall_clock_time": 20.714111, "process_in_blocks": "72", "process_kernel_time": 1.000607, "process_mem_max_rss": "126304", "process_out_blocks": "0", "process_user_time": 11.338834}
+[0m17:32:05.937864 [debug] [MainThread]: Command `dbt run` succeeded at 17:32:05.936731 after 20.74 seconds
+[0m17:32:05.952890 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x745792aeb0b0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x74578fdd8bc0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x74579227a8d0>]}
+[0m17:32:05.991384 [debug] [MainThread]: Flushing usage events
+[0m17:32:06.768861 [debug] [MainThread]: An error was encountered while trying to flush usage events
