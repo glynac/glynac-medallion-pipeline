@@ -64,12 +64,7 @@ NYC Taxi Parquet → Airflow → bronze_nyc_taxi → dbt → silver_nyc_taxi →
 
 ## Project Structure
 ```
-glynac-aadya-medallion-pipeline/
-│
-├── aadya-anil-kumar/
-│   ├── docker-compose.yml
-│   ├── .env.sample
-│   └── .env
+glynac-aadya-medallion-pipeline/aadya-anil-kumar/
 │
 ├── realtime/
 │   └── weather/
@@ -80,13 +75,17 @@ glynac-aadya-medallion-pipeline/
 │       ├── dags/
 │       │   └── nyc_taxi_ingest.py
 │       └── dbt/
-│           ├── dbt_project.yml
-│           ├── profiles.yml
-│           └── models/
-│               ├── silver/
-│               │   └── silver_nyc_taxi.sql
-│               └── gold/
-│                   └── gold_nyc_taxi_daily.sql
+│            ├──logs/
+│            │   └── dbt.log
+│            ├──target/
+│            │      ├── .user.yml
+│            │      ├── dbt_project.yml
+│            │      └── profiles.yml
+│            └── models/
+│                 ├── silver/
+│                 │     └── silver_nyc_taxi.sql
+│                 └── gold/
+│                       └── gold_nyc_taxi_daily.sql
 │
 ├── clickhouse/
 │   └── init.sql
@@ -94,6 +93,9 @@ glynac-aadya-medallion-pipeline/
 ├── data/
 │   └── yellow_tripdata_2024-01.parquet
 │
+├── .env
+├── .env.sample
+├── docker-compose.yml
 └── README.md
 
 
