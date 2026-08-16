@@ -1,0 +1,11 @@
+nyc_taxi:
+  target: dev
+  outputs:
+    dev:
+      type: clickhouse
+      schema: medallion
+      host: clickhouse
+      port: 8123
+      user: default
+      password: ''
+      secure: false
